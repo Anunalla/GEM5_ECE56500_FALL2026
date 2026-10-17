@@ -63,6 +63,7 @@ from common import MemConfig
 from common.FileSystemConfig import config_filesystem
 from common.Caches import *
 from common.cpu2000 import *
+from common import HostGlibc
 
 
 import spec2k6_spec2k17
@@ -163,6 +164,7 @@ multiprocesses = []
 numThreads = 1
 
 process = spec2k6_spec2k17.get_process(args, buildEnv['TARGET_ISA'])
+HostGlibc.apply(process, args)
 multiprocesses.append(process)
 
 # if args.bench:

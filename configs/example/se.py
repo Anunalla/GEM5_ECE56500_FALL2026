@@ -63,6 +63,7 @@ from common import MemConfig
 from common.FileSystemConfig import config_filesystem
 from common.Caches import *
 from common.cpu2000 import *
+from common import HostGlibc
 
 def get_processes(args):
     """Interprets provided args and returns a list of processes"""
@@ -90,9 +91,7 @@ def get_processes(args):
         process.cwd = os.getcwd()
         process.gid = os.getgid()
 
-        if args.env:
-            with open(args.env, 'r') as f:
-                process.env = [line.rstrip() for line in f]
+        HostGlibc.apply(process, args)
 
         if len(pargs) > idx:
             process.cmd = [wrkld] + pargs[idx].split()
